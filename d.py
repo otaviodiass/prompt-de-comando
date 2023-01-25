@@ -2,15 +2,15 @@ import platform
 import os
 import shutil
 
-diretorio = '.'
+diretorio = ''
 
 def ver():
-    print(platform.system())
-    print(platform.release())
+    print(platform.system()) #retorna o nome do sistema operacional
+    print(platform.release()) #retorna a versao do sistema operacional
 
 
 def dir():
-    print(os.listdir(diretorio))
+    print(os.listdir(diretorio)) #lista todos os arquivos e diretorios no caminho atual
 
 
 def cat():
@@ -18,52 +18,63 @@ def cat():
     with open(arquivo) as arquivo :
         linha = arquivo.readlines()
         for linha in linha:
-            print(linha)
+            print(linha) #abre o arquivo especificado e print na tela
 
 def edit():
     arquivoEdit = input()
     arquivo = open(arquivoEdit, 'w')
     newArquivo = input()
-    arquivo.write(newArquivo)
+    arquivo.write(newArquivo) #abre o arquivo especificado e permite a edicao do mesmo
 
 def mkdir():
     newDir = input()
-    os.mkdir(newDir)
+    os.mkdir(newDir) #cria um novo diretorio
 
 def cd():
     local = input()
     attCaminho(local)
-    x = os.chdir(os.path.join(os.getcwd(),local))
+    addBarra()
+    os.chdir(local) #altera o diretorio de trabalho atual
 
 def rm():
     x=input()
     remover = input()
     if x == '-a':
-        os.remove(remover)
+        try:
+          os.remove(remover) #remove o arquivo
+        except IOError:
+          print("nao foi possivel remover o arquivo")
     else:
-        os.rmdir(remover)
+        try:
+          os.rmdir(remover) #remove o diretorio 
+        except IOError:
+          print("nao foi possivel remover o pasta")
     
 def mv():
     nomeAntigo = input()
     newNome = input()
-    os.rename(nomeAntigo,newNome)
+    os.rename(nomeAntigo,newNome) #renomeia 
 
 def cp():
     nomeArquivo = input()
     pasta = input()
-    shutil.copy(nomeArquivo,pasta)
+    shutil.copy(nomeArquivo,pasta) #faz a copia do arquivo para o diretorio
+
 
 def at():
-    print(os.getcwd())
-
+    print(os.getcwd()) #localizacao do diretorio de trabalho atual
 
 def attCaminho(novoCaminho):
     global diretorio
-    diretorio = novoCaminho
+    diretorio += novoCaminho #atualiza o caminho da variavel diretorio para o mais recente
+
+def addBarra():
+  global diretorio
+  diretorio += '\\' #adiciona \\ no caminho para permitir a navegacao entre as pastas
 
 comando = ""
 while comando != "exit":
-    comando = input("/> ")
+    comando = input(diretorio + "> ")
     if comando == "ver":
         ver()
 
