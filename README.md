@@ -1,1 +1,1 @@
-Trabalho Prático feito para a diciplina de Sistemas Operacionais
+Trabalho Prático feito para a disciplina de Sistemas Operacionais
