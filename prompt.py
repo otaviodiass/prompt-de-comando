@@ -13,52 +13,42 @@ def dir():
     print(os.listdir(diretorio)) #lista todos os arquivos e diretorios no caminho atual
 
 
-def cat():
-    arquivo = input()
+def cat(arquivo):
     with open(arquivo) as arquivo :
         linha = arquivo.readlines()
         for linha in linha:
             print(linha) #abre o arquivo especificado e print na tela
 
-def edit():
-    arquivoEdit = input()
+def edit(arquivoEdit):
     arquivo = open(arquivoEdit, 'w')
     newArquivo = input()
     arquivo.write(newArquivo) #abre o arquivo especificado e permite a edicao do mesmo
 
-def mkdir():
-    newDir = input()
+def mkdir(newDir):
     os.mkdir(newDir) #cria um novo diretorio
 
-def cd():
-    local = input()
+def cd(local):
     attCaminho(local)
     addBarra()
     os.chdir(local) #altera o diretorio de trabalho atual
 
-def rm():
-    x=input()
-    remover = input()
-    if x == '-a':
+def rm(opcao, remove):
+    if opcao == '-a':
         try:
-          os.remove(remover) #remove o arquivo
+          os.remove(remove) #remove o arquivo
         except IOError:
           print("nao foi possivel remover o arquivo")
     else:
         try:
-          os.rmdir(remover) #remove o diretorio 
+          os.rmdir(remove) #remove o diretorio 
         except IOError:
           print("nao foi possivel remover o pasta")
     
-def mv():
-    nomeAntigo = input()
-    newNome = input()
-    os.rename(nomeAntigo,newNome) #renomeia 
+def mv(nome_antigo, nome_novo):
+    os.rename(nome_antigo, nome_novo) #renomeia 
 
-def cp():
-    nomeArquivo = input()
-    pasta = input()
-    shutil.copy(nomeArquivo,pasta) #faz a copia do arquivo para o diretorio
+def cp(nome_arquivo, pasta):
+    shutil.copy(nome_arquivo,pasta) #faz a copia do arquivo para o diretorio
 
 
 def at():
@@ -81,26 +71,26 @@ while comando != "exit":
     elif comando == "dir":
         dir()
 
-    elif comando == "cat":
-        cat()
+    elif comando.split(' ')[0] == "cat":
+        cat(comando.split(' ')[1])
 
-    elif comando == "edit":
-        edit()
+    elif comando.split(' ')[0] == "edit":
+        edit(comando.split(' ')[1])
 
-    elif comando == "mkdir":
-        mkdir()
+    elif comando.split(' ')[0] == "mkdir":
+        mkdir(comando.split(' ')[1])
 
-    elif comando == "cd":
-        cd()
+    elif comando.split(' ')[0] == "cd":
+        cd(comando.split(' ')[1::])
 
-    elif comando == "rm":
-        rm()
+    elif comando.split(' ')[0] == "rm":
+        rm(comando.split(' ')[1], comando.split(' ')[2])
 
-    elif comando == "mv":
-        mv()
+    elif comando.split(' ')[0] == "mv":
+        mv(comando.split(' ')[1], comando.split(' ')[2])
 
-    elif comando == "cp":
-        cp()
+    elif comando.split(' ')[0] == "cp":
+        cp(comando.split(' ')[1], comando.split(' ')[2])
 
     elif comando == "cd":
         cd()
